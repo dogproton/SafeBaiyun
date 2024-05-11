@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">白云通</string>
+    <string name="unlock_door">门禁解锁</string>
+    <string name="request_permission">申请权限</string>
 </resources>

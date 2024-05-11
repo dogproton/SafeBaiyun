@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:description="@string/app_name"
+    android:initialLayout="@layout/glance_default_loading_layout"
+    android:maxResizeWidth="110dp"
+    android:maxResizeHeight="40dp"
+    android:minWidth="110dp"
+    android:minHeight="35dp"
+    android:targetCellWidth="2"
+    android:targetCellHeight="1"
+    tools:targetApi="s" />

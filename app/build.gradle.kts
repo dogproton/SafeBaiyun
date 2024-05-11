@@ -10,10 +10,10 @@ android {
 
     defaultConfig {
         applicationId = "cn.huacheng.safebaiyun"
-        minSdk = 31
+        minSdk = 21
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -62,6 +62,9 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.glance)
+    implementation(libs.glance.material)
+    implementation(libs.navigation)
 
 
     testImplementation(libs.junit)

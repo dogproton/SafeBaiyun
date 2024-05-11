@@ -1,6 +1,8 @@
 package cn.huacheng.safebaiyun.unlock
 
 import android.content.Context
+import android.content.SharedPreferences
+import androidx.core.content.edit
 import cn.huacheng.safebaiyun.util.ContextHolder
 
 /**
@@ -11,19 +13,22 @@ import cn.huacheng.safebaiyun.util.ContextHolder
  */
 object DataRepo {
 
+    private val preferences: SharedPreferences by lazy {
+        ContextHolder.get().getSharedPreferences("data", Context.MODE_PRIVATE)
+    }
+
     fun readData(): Pair<String, String> {
-        val share = ContextHolder.get().getSharedPreferences("data", Context.MODE_PRIVATE)
-        val mac = share.getString("mac", "") ?: ""
-        val key = share.getString("key", "") ?: ""
+        val mac = preferences.getString("mac", "") ?: ""
+        val key = preferences.getString("key", "") ?: ""
 
 
         return mac to key
     }
 
-    fun save(mac:String,key:String){
-        val editor = ContextHolder.get().getSharedPreferences("data",Context.MODE_PRIVATE).edit()
-        editor.putString("mac",mac)
-        editor.putString("key",key)
-        editor.apply()
+    fun save(mac: String, key: String) {
+        preferences.edit {
+            putString("mac", mac)
+            putString("key", key)
+        }
     }
 }

@@ -10,8 +10,11 @@ import android.bluetooth.BluetoothGattDescriptor
 import android.bluetooth.BluetoothGattService
 import android.bluetooth.BluetoothManager
 import android.content.Context
+import android.os.Build
+import android.util.Log
 import cn.huacheng.safebaiyun.util.ContextHolder
 import cn.huacheng.safebaiyun.util.LockBiz
+import cn.huacheng.safebaiyun.util.showToast
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -47,7 +50,7 @@ object UnlockRepo {
         config = DataRepo.readData()
 
         if (!BluetoothAdapter.checkBluetoothAddress(config.first)) {
-            log("Mac地址格式错误")
+            showToast("Mac地址格式错误")
             return
         }
         connect(bluetoothAdapter)
@@ -64,12 +67,20 @@ object UnlockRepo {
 
     private fun connect(bluetoothAdapter: BluetoothAdapter) {
         val remoteDevice = bluetoothAdapter.getRemoteDevice(config.first)
-        gatt = remoteDevice.connectGatt(
-            ContextHolder.get(),
-            false,
-            callback,
-            BluetoothDevice.TRANSPORT_LE
-        )
+        gatt = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            remoteDevice.connectGatt(
+                ContextHolder.get(),
+                false,
+                callback,
+                BluetoothDevice.TRANSPORT_LE
+            )
+        } else {
+            remoteDevice.connectGatt(
+                ContextHolder.get(),
+                false,
+                callback
+            )
+        }
 
         log("尝试连接蓝牙 ${this::gatt.isInitialized}")
     }
@@ -125,9 +136,9 @@ object UnlockRepo {
             super.onCharacteristicWrite(gatt, characteristic, status)
             log("特征码写入回调")
             if (status == BluetoothGatt.GATT_SUCCESS) {
-                log("理论上开门成功")
+                showToast("开门成功")
             } else {
-                log("密钥写入失败")
+                showToast("密钥写入失败")
             }
             gatt?.close()
         }
@@ -198,6 +209,7 @@ object UnlockRepo {
 
     @OptIn(DelicateCoroutinesApi::class)
     private fun log(msg: String) {
+        println(msg)
 //        logList.add(msg)
 //        GlobalScope.launch {
 //            Log.e("UnlockRepo", "log: $msg")
