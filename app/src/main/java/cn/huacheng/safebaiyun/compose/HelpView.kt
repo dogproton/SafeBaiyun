@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -28,19 +29,23 @@ fun HelpView(navController: NavController) {
     Column {
         HelperTopBar(navController)
 
-        Column(modifier = Modifier.padding(12.dp)) {
-            AppHelper()
-            ShortcutHelper()
-            WidgetHelper()
+        LazyColumn(modifier = Modifier.padding(12.dp)) {
+            item { AppHelper() }
+            item { ShortcutHelper() }
+            item { WidgetHelper() }
         }
     }
 }
 
 @Composable
 fun AppHelper() {
-    Text(text = "关于软件", style = MaterialTheme.typography.titleMedium)
+    Text(text = "关于软件", style = MaterialTheme.typography.titleLarge)
     Text(text = "本软件是广州市白云区蓝牙门禁的离线版本，只需要门禁的mac地址以及加密key即可开门，无需网络。")
-    Text(text = "使用方法",modifier = Modifier.padding(top = 8.dp), style = MaterialTheme.typography.titleMedium)
+    Text(
+        text = "使用方法",
+        modifier = Modifier.padding(top = 8.dp),
+        style = MaterialTheme.typography.titleLarge
+    )
     Text(text = "1. 提取MAC地址及加密密钥")
     Text(text = "1.1 Root方式提取")
     Text(text = "有 root 的Android 手机可以直接前往 /data/data/com.huacheng.baiyunuser/databases/目录 找到数据库文件 (32位 hash).db")
@@ -55,7 +60,11 @@ fun AppHelper() {
 
 @Composable
 private fun ShortcutHelper() {
-    Text("快捷方式",modifier = Modifier.padding(top = 8.dp), style = MaterialTheme.typography.titleMedium)
+    Text(
+        "快捷方式",
+        modifier = Modifier.padding(top = 8.dp),
+        style = MaterialTheme.typography.titleLarge
+    )
     Text(text = "快捷方式在桌面上跟普通App长的差不多，使用快捷方式开门只需点击图标即可。在大部分国产系统如OPPO,MIUI上需要手动授予“创建桌面快捷方式”权限。")
     Row(
         modifier = Modifier
@@ -78,7 +87,11 @@ private fun ShortcutHelper() {
 
 @Composable
 private fun WidgetHelper() {
-    Text(text = "桌面小部件",modifier = Modifier.padding(top = 8.dp), style = MaterialTheme.typography.titleMedium)
+    Text(
+        text = "桌面小部件",
+        modifier = Modifier.padding(top = 8.dp),
+        style = MaterialTheme.typography.titleLarge
+    )
     Text(text = "桌面小部件类似于快捷方式，但是可以有更多的样式。本App提供了大中三种样式。可以在桌面长按空白处，然后选择“添加小部件”")
     Text(text = "在低于Android12的手机上小部件不会正常显示，建议不要使用。")
 
